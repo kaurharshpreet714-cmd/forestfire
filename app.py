@@ -44,3 +44,14 @@ if st.button("Predict Fire Risk"):
  if label == "HIGH":
  st.error("ALERT: High risk! Notify forest dept immediately.")
  elif label == "MODERATE":
+  st.warning("WARNING: Moderate risk. Increase patrols.")
+ else:
+ st.success("INFO: Low risk. Normal monitoring.")
+ # Embedded risk map
+ m = folium.Map(location=[36.7, 6.2], zoom_start=7)
+ folium.CircleMarker(
+ [36.7, 6.2], radius=20,
+ color=ICONS[label], fill=True,
+ popup=f"Risk: {label} ({prob:.2%})"
+ ).add_to(m)
+ st_folium(m, width=700, height=350)
